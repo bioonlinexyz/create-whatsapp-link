@@ -1,0 +1,70 @@
+
+<div id="container" style="width: 100%">
+    <div class="fields">
+      <label for="phone" style="margin-left: 10px;" title="Obrigatório">Número com DDD *</label><br>
+      <input type="phone" id="phone" class="fields_link" required="" style="width: 100%; border-radius: 6px; padding: 6px; border: solid 1px #a3a3a3">
+      <p style="font-size: 12px;margin-left: 10px; height: 36px;">Exemplo: 44988776655</p>
+    </div>
+    <div class="fields">
+      <label for="text" style="margin-left: 10px;" title="Obrigatório">Mensagem</label><br>
+      <textarea rows="4" type="text" id="text" class="fields_text" required="" style="width: 100%; border-radius: 6px; padding: 6px; border: solid 1px #a3a3a3" "=""></textarea>
+      <p style="font-size: 12px;margin-left: 10px; height: 36px;">Exemplo: Olá!</p>
+    </div>
+  
+    <div class="fields" id="buttons" style="margin-bottom: 20px;">
+      <button onclick="dataLayer.push({'event': 'criar_link_whatsapp'});" id="create_link" style="padding: 12px 24px 12px 24px; border-radius:8px; background-color: #6E41FB; color: #ffffff; border-style: none; cursor: pointer;" title="Copiar para a Área de Transferência">&nbsp;&nbsp;Criar link&nbsp;&nbsp;</button>
+      <button id="clear_fields" style="padding: 12px 24px 12px 24px; border-radius: 8px; background-color: #eeeeee; color: #212121; border-style: none; margin-right: 15px; cursor: pointer;">&nbsp;&nbsp;Limpar Campos&nbsp;&nbsp;</button>
+      
+    </div>
+    
+    <br>
+    
+    <div id="result_place">
+      <p style="margin-left: 15px;">Seu link:</p>
+      <textarea readonly="" name="" id="link_result" cols="30" rows="4" style="width: 100%; margin-bottom: 20px; background-color: #fafafa; padding: 20px; border-radius: 6px;  border: solid 1px #eee" "="">Seu link vai aparecer aqui.</textarea><br>
+      <button id="open_link" style="padding: 12px 24px 12px 24px; border-radius: 8px; background-color: #59C966; color: #ffffff; border-style: none; cursor: pointer;">&nbsp;&nbsp;Enviar mensagem&nbsp;&nbsp;</button>
+      
+      <button id="copy_link" style="padding: 12px 24px 12px 24px; border-radius: 8px; background-color: #212121; color: #ffffff; border-style: none;cursor: pointer;">&nbsp;&nbsp;Copiar link&nbsp;&nbsp;</button>
+      
+    </div>
+  </div>
+  
+  <script>
+    const createLinkButton = document.querySelector('#create_link');
+    const clearFieldsButton = document.querySelector('#clear_fields');
+    const openLinkButton = document.querySelector('#open_link');
+    const openLinkNewTabButton = document.querySelector('#open_link_new_tab');
+  
+    function createLink() {
+      const phone = document.querySelector('#phone').value;
+      const text = document.querySelector('#text').value;
+      const linkCreated = `https://api.whatsapp.com/send?phone=55${phone}&text=${encodeURIComponent(text)}`;
+      document.querySelector('#link_result').value = linkCreated;
+    }
+  
+    create_link.addEventListener('click', createLink);
+  
+    function clearFields() {
+      document.querySelector('#phone').value = '';
+      document.querySelector('#text').value = '';
+      document.querySelector('#link_result').value = 'Seu link vai aparecer aqui.';
+    }
+  
+    clear_fields.addEventListener('click', clearFields);
+  
+    function copyLink() {
+      const resultLink = document.querySelector('#link_result');
+      resultLink.select();
+      document.execCommand('copy');
+    }
+  
+    copy_link.addEventListener('click', copyLink);
+  
+    function openLink() {
+      const link = document.querySelector('#link_result').value;
+      window.open(link, '_blank');
+    }
+  
+    open_link.addEventListener('click', openLink);
+    open_link_new_tab.addEventListener('click', openLink);
+  </script>
